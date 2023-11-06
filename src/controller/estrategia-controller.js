@@ -10,13 +10,145 @@ const Grupo = require('../models/dtb_bots');
  const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
  const EstrategiaFurtuneTiger = require('../models/dtb_estrategia_furtunetiger');
  const TipoJogo = require('../models/dtb_tipojogo');
+ const VariosSlots = require('../models/dtb_estrategia_varioslots');
  const ValidationContract = require("../validator/fluent-validators");
  const authService = require('../services/auth-services');
  const { Op } = require("sequelize");
 const { updatewinlossEstrategias } = require('../services/helper-creater');
 
 module.exports = {
+
+ //varios SLots estarategia  ############################################################################
+async showVariosSlot(req,res){
+    try{
+       const { id } = req.params;
+       const token = req.body.token || req.query.token || req.headers['x-access-token'];
+       const usuarioLogado = await authService.decodeToken(token);
+   
+       if(!usuarioLogado){
+           return res.status(201).json({
+               msg:'Usuario não existe',
+              
+           })
+       }
+
+       
+
+       var grupo = await TipoJogo.findOne({where:{ id:id }});
+    
+       
+     
+
+       if(!grupo){
+        return res.status(201).json({
+            msg:'Jogo não existe',
+           
+        })
+       }
+
+       
+    const varioslot = await VariosSlots.findOne({
+        where: {bot_id:id},
+        order: [ [ 'id', 'DESC' ]],
+        });
+
+       return res.status(201).send({
+        varioslot
+       })
+
+    }
+    catch(err){
+        return res.status(200).send({
+            error:err.message
+        })
+    }
+
+},
+
+async updadeVariosSlots(req,res){
+         
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Usuario não existe',
+               
+            })
+        }
+     
+        const { id } = req.params;
+        const {espera,minimo,maximo,listajogs} = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(espera, 'espera', 'A espera é obrigatorio');
+        contract.isRequired(minimo, 'minimo', 'O minimo a é obrigatorio');
+        contract.isRequired(maximo, 'maximo', 'O maximo a é obrigatorio');
+        contract.isRequired(listajogs, 'listajogs', 'A listajogs a é obrigatorio');
+       
+
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+            })
+        };
+        var grupo = new TipoJogo();
+      
+        grupo = await TipoJogo.findOne({where:{ id:id }});
+   
+      if(!grupo){
+          return res.status(201).json({
+              msg:'Grupo não existe',
+             
+          })
+      }
+        const varioSlotOld = await VariosSlots.findOne({
+            where: {bot_id:id},
+            order: [ [ 'id', 'DESC' ]],
+            });
  
+    
+            if(!varioSlotOld){
+                const varioslot = await VariosSlots.create({
+                    bot_id: id,
+                    espera,
+                    minimo,
+                    maximo,
+                    listajogs,
+                }); 
+                return res.status(201).json({
+                    resolucao:true,
+                    msg:"Fortune Tiger cadastrado com sucesso",
+                    data:varioslot
+        
+                })
+            }
+
+            
+   
+    const varioSlotUpdate = await varioSlotOld.update({
+        espera,
+        minimo,
+        maximo,
+        listajogs,
+    }); 
+
+    return res.status(201).json({
+        msg:"Miner Atualizado com sucesso",
+        varioslot:varioSlotUpdate
+
+    })
+}
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
+
+},
+
+
 //Double  ############################################################################
 async index(req,res){
     try{

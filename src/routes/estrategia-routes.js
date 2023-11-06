@@ -85,4 +85,9 @@ router.get('/showfortunetiger/:id',authService.authorize,controller.showFurtuneT
 router.put('/updatewinloss',authService.authorizeRodrigo,controller.updatewinloss);
 
 
+
+//VARIOS SLOTS
+router.put('/updatevarioslot/:id',authService.authorize,controller.updadeVariosSlots);
+router.get('/showvarioslot/:id',authService.authorize,controller.showVariosSlot);
+
 module.exports =router;

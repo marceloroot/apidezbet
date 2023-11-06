@@ -15,7 +15,7 @@ require('dotenv').config();
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
-const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger, createRoleta, createDouble } = require('../services/helper-creater');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger, createRoleta, createDouble, createVariosSlots } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -87,8 +87,7 @@ async store(req,res){
             link_acesso,
             
         }); 
-
-   
+        console.log("@###############NOMEEEEEEEEEEEE",tipoJogo.nome)
         ///Monta as estrategias e mensagem ;;;;; melhorar isso atravazes de utils
         if(tipoJogo.nome.includes('Double')){
            await createDouble(tipoJogo.id);
@@ -130,6 +129,10 @@ async store(req,res){
         }else if(tipoJogo.nome.includes("Roleta")){
            await createRoleta(tipoJogo.id);
           
+        }
+        else if(tipoJogo.nome.includes("VariosSLT")){
+            await createVariosSlots(tipoJogo.id);
+           
         }else{
           //Estrategia Crash
           await EstrategiaCrash.create({

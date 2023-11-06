@@ -14,6 +14,7 @@ require('dotenv').config();
  const MsgRoleta = require('../models/dtb_mensagem_bet365');
  const MsgMiner = require('../models/dtb_mensagem_miner');
  const MsgFurtuneTiger = require('../models/dtb_mensagem_furtunetiger');
+ const MsgVarioSlot = require('../models/dtb_mensagem_varioslots');
 
  const ValidationContract = require("../validator/fluent-validators");
  const pm2 = require('pm2')
@@ -107,6 +108,7 @@ async store(req,res){
                  {association:"mensagenspremium"},
                  {association:"mensagensfurtunetiger"},
                  {association:"mensagensroleta"},
+                 {association:"mensagemvarioslots"},
              ]},
      
          );
@@ -160,6 +162,37 @@ async store(req,res){
                     final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
                 
             }); 
+        }else if(tipoJogo.nome.includes('VariosSLT')){
+            // console.log(tipoJogo)
+             tipoJogo.mensagemvarioslots.map(async res=>{
+                
+                 await MsgVarioSlot.create({
+                     bot_id: grupo.id,
+                     abertura:res.abertura,
+                     fechamento:res.fechamento,
+                     atencao:res.atencao,
+                     confirmacao:res.confirmacao,
+                     textbutton:res.textbutton,
+                     textbuttondois:res.textbuttondois,
+                     urlbutton:res.urlbutton,
+                     urlbuttondois:res.urlbuttondois,
+                     final:res.final,
+                     statusgreen:res.statusgreen,
+                     
+                     //padrao
+                     tipomensagem:res.tipomensagem,
+                     manhainicio:res.manhainicio,
+                     manhafim:res.manhafim,
+                     tardeinicio:res.tardeinicio,
+                     tardefim:res.tardefim,
+                     noiteinicio:res.noiteinicio,
+                     noiteifim:res.noiteifim,
+                     statusmanha:res.statusmanha,
+                     statustarde:res.statustarde,
+                     statusnoite:res.statusnoite,
+                 });
+             })
+ 
         }else if(tipoJogo.nome.includes('Crash')){
            // console.log(tipoJogo)
             tipoJogo.mensagensaviator.map(async res=>{
@@ -900,6 +933,7 @@ async bucaGrupoRodrigo(req,res){
             {association:"mensagensminer"},
             {association:"mensagensaviator"},
             {association:"mensagensfurtunetiger"},
+            {association:"mensagensvarioslots"},
         ]},
 
         );
@@ -923,6 +957,7 @@ async bucaGrupoRodrigo(req,res){
                 {association:"estrategiasaviator"},
                 {association:"estrategiasroleta"},
                 {association:"estrategiasfurtunetiger"},
+                {association:"estrategiasvarioslots"},
                 
             ]},
     

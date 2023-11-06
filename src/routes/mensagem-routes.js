@@ -57,9 +57,18 @@ router.put('/updateminer/:id',authService.authorize,controllerMiner.updateMessag
 router.get('/showfortunetiger/:id/tipo/:tipo',authService.authorize,controller.showFurtuneTiger);
 router.put('/updatefortunetiger/:id',authService.authorize,controller.updateFurtuneTiger);
 
+//Varios Slot
+router.get('/showvarioslot/:id/tipo/:tipo',authService.authorize,controller.showVariosSlots);
+router.put('/updatevarioslot/:id',authService.authorize,controller.updateVariosSlots);
+
 
 
 //############### PADRAO ######################
+
+//Varios Slot
+router.get('/showvarioslotpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showVariosSlots);
+router.put('/updatevarioslotpadrao/:id',authService.authorize,controllerParao.updateVariosSlots);
+
 //Fantan PADRAO
 router.get('/showfantanpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showFantan);
 router.put('/updatefantanpadrao/:id',authService.authorize,controllerParao.updatefantan);

@@ -32,6 +32,7 @@ class dtb_tipojogo extends Model {
      this.hasMany(models.dtb_estrategia_aviator,{ foreignKey: 'bot_id', as:'estrategiasaviator' });
      this.hasMany(models.dtb_estrategia_miner,{ foreignKey: 'bot_id', as:'estrategiasminers' });
      this.hasMany(models.dtb_estrategia_furtunetiger,{ foreignKey: 'bot_id', as:'estrategiasfurtunetiger' });
+     this.hasMany(models.dtb_estrategia_varioslots,{ foreignKey: 'bot_id', as:'estrategiasvarioslots' });
      this.hasMany(models.dtb_mensagem_padrao_fantan,{ foreignKey: 'bot_id', as:'mensagensfantan' });
      this.hasMany(models.dtb_mensagem_padrao_aviator,{ foreignKey: 'bot_id', as:'mensagensaviator' });
      this.hasMany(models.dtb_mensagem_padrao_miner,{ foreignKey: 'bot_id', as:'mensagensminer' });
@@ -41,6 +42,7 @@ class dtb_tipojogo extends Model {
      this.hasMany(models.dtb_mensagem_padrao_furtunetiger,{ foreignKey: 'bot_id', as:'mensagensfurtunetiger'});
      this.hasMany(models.dtb_mensagem_padrao_bet365,{ foreignKey: 'bot_id', as:'mensagensroleta'});
      this.hasMany(models.dtb_mensagem_padrao_double,{ foreignKey: 'bot_id', as:'mensagemdouble'});
+     this.hasMany(models.dtb_mensagem_padrao_varioslots,{ foreignKey: 'bot_id', as:'mensagemvarioslots'});
  
     }
  

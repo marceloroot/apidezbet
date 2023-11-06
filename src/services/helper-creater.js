@@ -17,6 +17,9 @@ const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
 const MsgRoleta = require('../models/dtb_mensagem_padrao_bet365');    
 const EstrategiaDouble = require('../models/dtb_estrategia_double');
 
+const EstrategiaVarioSlot = require('../models/dtb_estrategia_varioslots');
+const msgVarioSlot = require('../models/dtb_mensagem_padrao_varioslots'); 
+
 module.exports ={
     async createDouble(tipoJogoId){
         
@@ -649,5 +652,43 @@ module.exports ={
         }); 
        
      },
+
+
+     async createVariosSlots(tipoJogoId){
+        await EstrategiaVarioSlot.create({
+            bot_id:tipoJogoId,
+            espera:2,
+            minimo:2,
+            maximo:2,
+            listajogs:''
+        }); 
+         await msgVarioSlot.create({
+            bot_id:tipoJogoId,
+          
+            abertura:'             ⚠️ ATENÇÃO ⚠️ \n\nIniciaremos o envio dos sinais em breve. \n\nFique atento e proveita fechamento', 
+            fechamento:'             Sinais encerrado \n\nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \n\nNão perca esta oportunidade!',  
+          
+            atencao:'⚠️ ATENÇÃO, possível entrada [ENTRADA] \n⌚️ Aguarde a confirmação \n🎰 Bet 10: <a href="https://bet10">Crash</a>',
+
+            confirmacao:'🔔 Entrada Confirmada 🔔 \n🎰 Bet 10: <a href="https://bet10">Crash</a> \💰 Entrar após [ULTIMA_VELA] \n🚀 Auto retirar [ENTRADA]',
+
+            final:'🚀Resultado Final\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
+            tipomensagem:1,
+        }); 
+
+        await msgVarioSlot.create({
+            bot_id:tipoJogoId,
+          
+            atencao:'⚠️ ATENÇÃO, possível entrada [ENTRADA] \n⌚️ Aguarde a confirmação \n🎰 Bet10: <a href="https://bet10">Crash</a>',
+
+            confirmacao:'🔔 Entrada Confirmada 🔔 \n🎰 Bet10: <a href="https://bet10">Crash</a> \💰 Entrar após [ULTIMA_VELA] \n🚀 Auto retirar [ENTRADA]',
+
+            final:'🚀Resultado Final\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
+            tipomensagem:2,
+        }); 
+ 
+  
+
+    },
 
 }

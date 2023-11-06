@@ -44,6 +44,11 @@ const dtb_mensagem_padrao_penalty = require('../models/dtb_mensagem_padrao_penal
 const dtb_mensagem_padrao_premium = require('../models/dtb_mensagem_padrao_premium');
 const dtb_mensagem_padrao_furtunetiger = require('../models/dtb_mensagem_padrao_furtunetiger');
 
+//varios slots
+const dtb_estrategia_varioslots = require('../models/dtb_estrategia_varioslots');
+const dtb_mensagem_varioslots = require('../models/dtb_mensagem_varioslots');
+const dtb_mensagem_padrao_varioslots = require('../models/dtb_mensagem_padrao_varioslots');
+
 
 
 const connection = new Sequelize(dbConfig);
@@ -84,6 +89,11 @@ dtb_estrategia_furtunetiger.init(connection);
 dtb_mensagem_padrao_furtunetiger.init(connection);
 dtb_mensagem_furtunetiger.init(connection);
 dtb_mensagem_padrao_double.init(connection);
+
+//###varios slots
+dtb_estrategia_varioslots.init(connection);
+dtb_mensagem_varioslots.init(connection);
+dtb_mensagem_padrao_varioslots.init(connection);
 
 
 
@@ -128,3 +138,8 @@ dtb_estrategia_furtunetiger.associate(connection.models);
 dtb_mensagem_padrao_furtunetiger.associate(connection.models);
 dtb_mensagem_furtunetiger.associate(connection.models);
 dtb_mensagem_padrao_double.associate(connection.models);
+
+//varios stlots
+dtb_estrategia_varioslots.associate(connection.models);
+dtb_mensagem_varioslots.associate(connection.models);
+dtb_mensagem_padrao_varioslots.associate(connection.models);
